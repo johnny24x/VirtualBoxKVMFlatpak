@@ -1,0 +1,156 @@
+app-id: io.github.cyberus_technology.virtualbox-kvm
+runtime: org.kde.Platform
+runtime-version: "6.9"
+sdk: org.kde.Sdk
+command: VirtualBox
+rename-icon: virtualbox
+rename-desktop-file: virtualbox.desktop
+# rename-appdata-file: virt-manager.appdata.xml
+finish-args:
+  - --device=dri
+  # USB device redirection
+  - --device=all
+  - --share=ipc
+  - --share=network
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --socket=wayland
+  # virt-manager implements fetching secrets over dbus without importing libsecret, so no added dependency
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.kde.StatusNotifierWatcher
+  # TODO: figure out if notifications is needed
+  #- --talk-name=org.freedesktop.Notifications
+  # TODO: also enable pcsc and cups?
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/applications/mimeinfo.cache
+  - /share/bash-completion
+  - /share/icons/hicolor/icon-theme.cache
+  - /share/man
+  - /share/pkgconfig
+  - "*.la"
+modules:
+  - name: virtualbox
+    buildsystem: simple
+    build-options:
+      env:
+        LIBRARY_PATH: /app/lib/X11:/app/lib
+    build-commands:
+      - echo "VBOX_GCC_OPT=$CXXFLAGS" >> LocalConfig.kmk
+      - echo "VBOX_SVN_REV=7" >> LocalConfig.kmk
+      - cat LocalConfig.kmk
+      - git init
+      - git config user.email "you@example.com"
+      - git config user.name "Your Name"
+      - git add *
+      - git commit -m "Base source code"
+      - git am ./virtualbox-kvm/patches/*.patch
+      - sed -i "s/python3.7 python3.7m/python3.13 python3.13m/" ./configure
+      - ./configure --with-kvm --disable-kmods --disable-docs --disable-java --disable-vmmraw --enable-vde --disable-hardening --with-makeself=/usr/bin/echo
+      - bash -c 'source ./env.sh ; kmk'
+      - bash install.sh
+      - ln -s /bin/true /app/bin/lsmod
+    sources:
+      - type: archive
+        url: https://download.virtualbox.org/virtualbox/7.2.0/VirtualBox-7.2.0.tar.bz2
+        sha256: 4f2804ff27848ea772aee6b637bb1e10ee74ec2da117c257413e2d2c4f670ba0
+      - type: git
+        url: https://github.com/cyberus-technology/virtualbox-kvm.git
+        commit: e8cf529eea56074a8861223b67932e9784b69e8c
+        dest: virtualbox-kvm
+      - type: file
+        path: LocalConfig.kmk
+      - type: file
+        path: install.sh
+    modules:
+      - shared-modules/SDL/SDL-1.2.15.json
+      - name: pam
+        disabled: false
+        sources:
+          - type: git
+            url: https://github.com/linux-pam/linux-pam.git
+            tag: v1.6.1
+        buildsystem: autotools
+        config-opts:
+          - --disable-doc
+        post-install:
+          - cp -r libpam/include/* $FLATPAK_DEST/include
+      # - name: libidl
+      #   sources:
+      #     - type: archive
+      #       url: http://ftp.gnome.org/pub/gnome/sources/libIDL/0.8/libIDL-0.8.14.tar.bz2
+      #       sha256: c5d24d8c096546353fbc7cedf208392d5a02afe9d56ebcc1cccb258d7c4d2220
+      # - name: acpica-unix
+      #   buildsystem: simple
+      #   build-options:
+      #     cflags: -O2 -g -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong
+      #     cflags-override: true
+      #   build-commands:
+      #     - make -j $FLATPAK_BUILDER_N_JOBS
+      #     - make install DESTDIR=$FLATPAK_DEST PREFIX=/
+      #   sources:
+      #     - type: archive
+      #       url: https://github.com/acpica/acpica/releases/download/20250807/acpica-unix2-20250807.tar.gz
+      #       sha256: a3df5eb6b21324075d6aff9b1743e200fba5a1b21f35686c2d2b4466b2df6886
+      - name: gsoap
+        build-options:
+          make-args:
+            # Necessary because dependency resolution is not declared properly upstream
+            - -j1
+          env:
+            SOAPCPP2_IMPORTPATH: -DSOAPCPP2_IMPORT_PATH="${FLATPAK_DEST}/share/gsoap/import:${FLATPAK_DEST}/share/gsoap"
+        config-opts:
+          - --disable-static
+          - --enable-ipv6
+          - --enable-samples
+        sources:
+          - type: archive
+            url: https://downloads.sourceforge.net/gsoap2/gsoap_2.8.135.zip
+            sha256: b11757e405d55d4674dfbf88c4fa6d7e24155cf64ed8ed578ccad2f2b555e98d
+      - name: yasm
+        cleanup:
+          - "*"
+        sources:
+          - type: archive
+            url: https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
+            sha256: 3dce6601b495f5b3d45b59f7d2492a340ee7e84b5beca17e48f862502bd5603f
+      - name: xmu
+        sources:
+          - type: archive
+            url: https://xorg.freedesktop.org/releases/individual/lib/libXmu-1.2.1.tar.xz
+            sha256: fcb27793248a39e5fcc5b9c4aec40cc0734b3ca76aac3d7d1c264e7f7e14e8b2
+            x-checker-data:
+              type: anitya
+              project-id: 1785
+              stable-only: true
+              url-template: https://xorg.freedesktop.org/releases/individual/lib/libXmu-$version.tar.xz
+      - name: glu
+        buildsystem: meson
+        sources:
+          - type: archive
+            url: https://archive.mesa3d.org/glu/glu-9.0.3.tar.xz
+            sha256: bd43fe12f374b1192eb15fe20e45ff456b9bc26ab57f0eee919f96ca0f8a330f
+      - name: lvm2
+        buildsystem: simple
+        build-options:
+          strip: false
+          no-debuginfo: true
+        build-commands:
+          - ./configure --prefix=/app
+          - make
+          - make install_device-mapper
+        sources:
+          - type: git
+            url: https://gitlab.com/lvmteam/lvm2.git
+            tag: v2_03_35
+            commit: 38c1124a478fa3889c649338b6e8ccdc0370e201
+        modules:
+          - name: libaio
+            no-autogen: true
+            make-install-args:
+              - prefix=${FLATPAK_DEST}
+            sources:
+              - type: archive
+                url: https://releases.pagure.org/libaio/libaio-0.3.112.tar.gz
+                sha256: ab0462f2c9d546683e5147b1ce9c195fe95d07fac5bf362f6c01637955c3b492

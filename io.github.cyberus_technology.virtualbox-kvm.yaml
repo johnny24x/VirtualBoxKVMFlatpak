@@ -7,20 +7,13 @@ rename-icon: virtualbox
 rename-desktop-file: virtualbox.desktop
 # rename-appdata-file: virt-manager.appdata.xml
 finish-args:
-  - --device=dri
-  # USB device redirection
   - --device=all
   - --share=ipc
   - --share=network
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --socket=wayland
-  # virt-manager implements fetching secrets over dbus without importing libsecret, so no added dependency
-  - --talk-name=org.freedesktop.secrets
-  - --talk-name=org.kde.StatusNotifierWatcher
-  # TODO: figure out if notifications is needed
-  #- --talk-name=org.freedesktop.Notifications
-  # TODO: also enable pcsc and cups?
+  - "--filesystem=~/VirtualBox VMs"
 cleanup:
   - /include
   - /lib/pkgconfig

